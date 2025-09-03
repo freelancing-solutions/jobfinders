@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { AppLayout } from '@/components/layout/app-layout'
 import { Button } from '@/components/ui/button'
 import { JobCard } from '@/components/ui/job-card'
 import { JobSearch } from '@/components/ui/job-search'
@@ -134,7 +135,8 @@ export default function Home() {
   const recentJobs = filteredJobs.filter(job => !job.isFeatured)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <AppLayout>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20">
         <div className="container mx-auto px-4">
@@ -345,6 +347,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </AppLayout>
   )
 }
