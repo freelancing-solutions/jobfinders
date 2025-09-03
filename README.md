@@ -1,60 +1,119 @@
-# 🚀 Welcome to Z.ai Code Scaffold
+# 💼 JobFinders – Modern AI-Powered Job Board Platform
 
-A modern, production-ready web application scaffold powered by cutting-edge technologies, designed to accelerate your development with [Z.ai](https://chat.z.ai)'s AI-powered coding assistance.
+A production-ready, full-stack job board platform built with Next.js, TypeScript, Prisma, and AI capabilities. Designed for both job seekers and employers with advanced AI features, real-time interactions, and a beautiful, responsive UI.
 
-## ✨ Technology Stack
+---
 
-This scaffold provides a robust foundation built with:
+## 🚀 Technology Stack
 
-### 🎯 Core Framework
-- **⚡ Next.js 15** - The React framework for production with App Router
-- **📘 TypeScript 5** - Type-safe JavaScript for better developer experience
-- **🎨 Tailwind CSS 4** - Utility-first CSS framework for rapid UI development
+### Core Framework & Language
+- **Next.js 15** – App Router, server components, and optimized routing
+- **TypeScript 5** – Type-safe development for reliability and maintainability
 
-### 🧩 UI Components & Styling
-- **🧩 shadcn/ui** - High-quality, accessible components built on Radix UI
-- **🎯 Lucide React** - Beautiful & consistent icon library
-- **🌈 Framer Motion** - Production-ready motion library for React
-- **🎨 Next Themes** - Perfect dark mode in 2 lines of code
+### AI & Machine Learning
+- **OpenAI GPT-4** – Natural language processing and generation
+- **TensorFlow.js** – Client-side ML processing
+- **Custom ML Models** – Specialized matching and analysis
+- **Redis** – AI response caching and performance optimization
 
-### 📋 Forms & Validation
-- **🎣 React Hook Form** - Performant forms with easy validation
-- **✅ Zod** - TypeScript-first schema validation
+### Styling & UI
+- **Tailwind CSS 4** – Utility-first CSS for rapid, responsive design
+- **shadcn/ui** – Accessible, customizable UI components
+- **Lucide React** – Modern icon system
 
-### 🔄 State Management & Data Fetching
-- **🐻 Zustand** - Simple, scalable state management
-- **🔄 TanStack Query** - Powerful data synchronization for React
-- **🌐 Axios** - Promise-based HTTP client
+### Forms & Validation
+- **React Hook Form** – Performant, scalable forms
+- **Zod** – TypeScript-first schema validation
 
-### 🗄️ Database & Backend
-- **🗄️ Prisma** - Next-generation Node.js and TypeScript ORM
-- **🔐 NextAuth.js** - Complete open-source authentication solution
+### State & Data Management
+- **Zustand** – Simple, scalable state management
+- **TanStack Query** – Powerful data fetching and caching
+- **Axios** – Promise-based HTTP client
 
-### 🎨 Advanced UI Features
-- **📊 TanStack Table** - Headless UI for building tables and datagrids
-- **🖱️ DND Kit** - Modern drag and drop toolkit for React
-- **📊 Recharts** - Redefined chart library built with React and D3
-- **🖼️ Sharp** - High performance image processing
+### Backend & Database
+- **Prisma ORM** – Type-safe database access (PostgreSQL, MySQL, etc.)
+- **NextAuth.js** – Secure authentication with custom roles (seeker, employer, admin)
+- **Socket.IO** – Real-time features (notifications, chat)
 
-### 🌍 Internationalization & Utilities
-- **🌍 Next Intl** - Internationalization library for Next.js
-- **📅 Date-fns** - Modern JavaScript date utility library
-- **🪝 ReactUse** - Collection of essential React hooks for modern development
+### Advanced Features
+- **TanStack Table** – Headless, flexible data tables
+- **DND Kit** – Modern drag-and-drop for React
+- **Recharts** – Data visualization and charts
+- **Sharp** – High-performance image processing
 
-## 🎯 Why This Scaffold?
+### Utilities & Internationalization
+- **Next Intl** – Internationalization for multi-language support
+- **Date-fns** – Modern date utilities
+- **ReactUse** – Essential React hooks
 
-- **🏎️ Fast Development** - Pre-configured tooling and best practices
-- **🎨 Beautiful UI** - Complete shadcn/ui component library with advanced interactions
-- **🔒 Type Safety** - Full TypeScript configuration with Zod validation
-- **📱 Responsive** - Mobile-first design principles with smooth animations
-- **🗄️ Database Ready** - Prisma ORM configured for rapid backend development
-- **🔐 Auth Included** - NextAuth.js for secure authentication flows
-- **📊 Data Visualization** - Charts, tables, and drag-and-drop functionality
-- **🌍 i18n Ready** - Multi-language support with Next Intl
-- **🚀 Production Ready** - Optimized build and deployment settings
-- **🤖 AI-Friendly** - Structured codebase perfect for AI assistance
+---
 
-## 🚀 Quick Start
+## ✨ Key Features
+
+### AI-Powered Features
+1. **Smart Resume Builder**
+   - AI-assisted content generation
+   - ATS optimization suggestions
+   - Industry-specific formatting
+   - Skill gap analysis
+
+2. **Intelligent ATS System**
+   - Advanced keyword extraction
+   - Resume scoring algorithm
+   - Industry-specific term matching
+   - Compliance verification
+
+3. **AI Candidate Matching**
+   - Skills-based intelligent matching
+   - Experience level analysis
+   - Cultural fit assessment
+   - Career path recommendations
+
+4. **AI Employment Agents**
+   - Smart job recommendations
+   - Interview preparation assistant
+   - Career guidance
+   - Salary negotiation support
+
+5. **Context-Aware Notifications**
+   - Smart timing system
+   - Multi-channel delivery
+   - Engagement optimization
+   - Personalized alerts
+
+### Traditional Features
+- Job posting and management
+- Application tracking
+- Real-time chat
+- Profile management
+- Advanced search
+- Analytics dashboard
+
+---
+
+## 🏗️ Project Structure
+
+```
+src/
+├── app/           # Next.js App Router pages & API routes
+├── components/    # Reusable React components
+│   └── ui/       # shadcn/ui components
+├── ai/           # AI service integrations
+│   ├── resume/   # Resume builder services
+│   ├── ats/      # ATS system
+│   ├── matching/ # Candidate matching
+│   └── agents/   # AI agents
+├── hooks/        # Custom React hooks
+└── lib/          # Utilities and configurations
+prisma/
+└── schema.prisma  # Database schema
+docs/
+└── ...            # TODO files and context documentation
+```
+
+---
+
+## ⚡ Quick Start
 
 ```bash
 # Install dependencies
@@ -70,72 +129,67 @@ npm run build
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see your application running.
-
-## 🤖 Powered by Z.ai
-
-This scaffold is optimized for use with [Z.ai](https://chat.z.ai) - your AI assistant for:
-
-- **💻 Code Generation** - Generate components, pages, and features instantly
-- **🎨 UI Development** - Create beautiful interfaces with AI assistance  
-- **🔧 Bug Fixing** - Identify and resolve issues with intelligent suggestions
-- **📝 Documentation** - Auto-generate comprehensive documentation
-- **🚀 Optimization** - Performance improvements and best practices
-
-Ready to build something amazing? Start chatting with Z.ai at [chat.z.ai](https://chat.z.ai) and experience the future of AI-powered development!
-
-## 📁 Project Structure
-
-```
-src/
-├── app/                 # Next.js App Router pages
-├── components/          # Reusable React components
-│   └── ui/             # shadcn/ui components
-├── hooks/              # Custom React hooks
-└── lib/                # Utility functions and configurations
-```
-
-## 🎨 Available Features & Components
-
-This scaffold includes a comprehensive set of modern web development tools:
-
-### 🧩 UI Components (shadcn/ui)
-- **Layout**: Card, Separator, Aspect Ratio, Resizable Panels
-- **Forms**: Input, Textarea, Select, Checkbox, Radio Group, Switch
-- **Feedback**: Alert, Toast (Sonner), Progress, Skeleton
-- **Navigation**: Breadcrumb, Menubar, Navigation Menu, Pagination
-- **Overlay**: Dialog, Sheet, Popover, Tooltip, Hover Card
-- **Data Display**: Badge, Avatar, Calendar
-
-### 📊 Advanced Data Features
-- **Tables**: Powerful data tables with sorting, filtering, pagination (TanStack Table)
-- **Charts**: Beautiful visualizations with Recharts
-- **Forms**: Type-safe forms with React Hook Form + Zod validation
-
-### 🎨 Interactive Features
-- **Animations**: Smooth micro-interactions with Framer Motion
-- **Drag & Drop**: Modern drag-and-drop functionality with DND Kit
-- **Theme Switching**: Built-in dark/light mode support
-
-### 🔐 Backend Integration
-- **Authentication**: Ready-to-use auth flows with NextAuth.js
-- **Database**: Type-safe database operations with Prisma
-- **API Client**: HTTP requests with Axios + TanStack Query
-- **State Management**: Simple and scalable with Zustand
-
-### 🌍 Production Features
-- **Internationalization**: Multi-language support with Next Intl
-- **Image Optimization**: Automatic image processing with Sharp
-- **Type Safety**: End-to-end TypeScript with Zod validation
-- **Essential Hooks**: 100+ useful React hooks with ReactUse for common patterns
-
-## 🤝 Get Started with Z.ai
-
-1. **Clone this scaffold** to jumpstart your project
-2. **Visit [chat.z.ai](https://chat.z.ai)** to access your AI coding assistant
-3. **Start building** with intelligent code generation and assistance
-4. **Deploy with confidence** using the production-ready setup
+Visit [http://localhost:3000](http://localhost:3000) to view the app.
 
 ---
 
-Built with ❤️ for the developer community. Supercharged by [Z.ai](https://chat.z.ai) 🚀
+## 🗄️ Database & Auth
+
+- **Prisma**: Edit `prisma/schema.prisma` for models.  
+  Run migrations with:
+  ```bash
+  npx prisma migrate dev
+  ```
+- **NextAuth.js**: Configured for role-based authentication (seeker, employer, admin).
+
+---
+
+## 🛠️ Development Notes
+
+- **Aliases**:  
+  - `@/components` → `src/components`  
+  - `@/lib` → `src/lib`  
+  - `@/hooks` → `src/hooks`  
+  - `@/components/ui` → `src/components/ui`
+- **Custom Server**:  
+  - `server.ts` integrates Next.js and Socket.IO for real-time features.
+
+---
+
+## 📚 Documentation
+
+Detailed documentation can be found in the [`docs/`](./docs) directory:
+- Architecture Overview
+- AI Features Implementation
+- Development Guidelines
+- API Documentation
+- TODO Lists
+
+---
+
+## 🔄 AI Architecture
+
+```mermaid
+graph TD
+    A[Web UI] --> B[Next.js API Routes]
+    B --> C[AI Services Layer]
+    C --> D[OpenAI GPT-4]
+    C --> E[Custom ML Models]
+    B --> F[Prisma ORM]
+    F --> G[PostgreSQL]
+    B --> H[Redis Cache]
+    I[Socket.IO] --> A
+    I --> B
+```
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo and clone it
+2. Create a new branch for your feature or fix
+3. Commit your changes and open a pull request
+
+---
+
+Built with ❤️ using Next.js, Prisma, and shadcn/ui.
