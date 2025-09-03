@@ -5,7 +5,18 @@ import { NavigationDropdown } from '@/components/ui/navigation-dropdown'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { Briefcase, MapPin, Heart } from 'lucide-react'
+import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+import {
+  Briefcase,
+  MapPin,
+  Heart,
+  Building2,
+  Users,
+  FileText,
+  Settings,
+  CreditCard
+} from 'lucide-react'
 
 interface NavigationHeaderProps {
   user?: {
@@ -17,8 +28,72 @@ interface NavigationHeaderProps {
 }
 
 export function NavigationHeader({ user }: NavigationHeaderProps) {
+  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const isEmployer = user?.role === 'EMPLOYER'
+
+  const employerLinks = [
+    {
+      href: '/employer/dashboard',
+      label: 'Dashboard',
+      icon: Briefcase,
+    },
+    {
+      href: '/employer/jobs',
+      label: 'Jobs',
+      icon: FileText,
+    },
+    {
+      href: '/employer/applications',
+      label: 'Applications',
+      icon: Users,
+    },
+    {
+      href: '/employer/company',
+      label: 'Company Profile',
+      icon: Building2,
+    },
+    {
+      href: '/pricing',
+      label: 'Subscription',
+      icon: CreditCard,
+    },
+  ]
+
+  const jobSeekerLinks = [
+    {
+      href: '/dashboard',
+      label: 'Dashboard',
+      icon: Briefcase,
+    },
+    {
+      href: '/jobs',
+      label: 'Find Jobs',
+      icon: FileText,
+    },
+    {
+      href: '/applications',
+      label: 'My Applications',
+      icon: Users,
+    },
+    {
+      href: '/saved',
+      label: 'Saved Jobs',
+      icon: Heart,
+    },
+    {
+      href: '/profile',
+      label: 'Profile & Resume',
+      icon: Settings,
+    },
+  ]
+
+  const navigationLinks = isEmployer ? employerLinks : jobSeekerLinks
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      {/* Main Header */}
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo and Brand */}
         <div className="flex items-center gap-6">
@@ -39,26 +114,91 @@ export function NavigationHeader({ user }: NavigationHeaderProps) {
           </div>
         </div>
 
+        {/* Navigation Links - Desktop */}
+        {user && (
+          <nav className="hidden md:flex items-center gap-6">
+            {navigationLinks.map((link) => {
+              const Icon = link.icon
+              const isActive = pathname === link.href
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                    isActive
+                      ? 'bg-primary/10 text-primary'
+                      : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  {link.label}
+                </Link>
+              )
+            })}
+          </nav>
+        )}
+
         {/* Navigation Controls */}
         <div className="flex items-center gap-4">
-          {/* Quick Stats for Authenticated Users */}
-          {user && (
-            <div className="hidden md:flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-1 text-muted-foreground">
-                <Briefcase className="h-4 w-4" />
-                <span>2,451 Jobs</span>
-              </div>
-              <div className="flex items-center gap-1 text-muted-foreground">
-                <Heart className="h-4 w-4" />
-                <span>12 Saved</span>
-              </div>
+          {/* Quick Actions */}
+          {user ? (
+            <>
+              {/* Post Job Button for Employers */}
+              {isEmployer && (
+                <Button asChild variant="default" size="sm">
+                  <Link href="/employer/post">
+                    Post Job
+                  </Link>
+                </Button>
+              )}
+              
+              {/* User Menu */}
+              <NavigationDropdown user={user} />
+            </>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" asChild>
+                <Link href="/auth/signin">
+                  Sign In
+                </Link>
+              </Button>
+              <Button size="sm" asChild>
+                <Link href="/auth/signup">
+                  Sign Up
+                </Link>
+              </Button>
             </div>
           )}
-
-          {/* Navigation Dropdown */}
-          <NavigationDropdown user={user} />
         </div>
       </div>
+
+      {/* Mobile Navigation Menu */}
+      {user && (
+        <nav className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} border-t`}>
+          <div className="container mx-auto px-4 py-2">
+            <div className="grid grid-cols-2 gap-2">
+              {navigationLinks.map((link) => {
+                const Icon = link.icon
+                const isActive = pathname === link.href
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`flex items-center gap-2 p-3 text-sm font-medium rounded-md transition-colors ${
+                      isActive
+                        ? 'bg-primary/10 text-primary'
+                        : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
+                    }`}
+                  >
+                    <Icon className="h-4 w-4" />
+                    {link.label}
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+        </nav>
+      )}
     </header>
   )
 }

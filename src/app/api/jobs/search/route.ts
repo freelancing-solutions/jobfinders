@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
+import { JobStatus } from '@prisma/client'
 
 export async function GET(request: NextRequest) {
   try {
@@ -7,9 +8,10 @@ export async function GET(request: NextRequest) {
     
     const query = searchParams.get('query') || ''
     const location = searchParams.get('location') || ''
-    const positionType = searchParams.get('positionType') || ''
-    const remotePolicy = searchParams.get('remotePolicy') || ''
+    const employmentType = searchParams.get('employmentType') || ''
+    const isRemote = searchParams.get('isRemote') === 'true'
     const experienceLevel = searchParams.get('experienceLevel') || ''
+    const categoryId = searchParams.get('categoryId') || undefined
     const salaryMin = searchParams.get('salaryMin') ? parseFloat(searchParams.get('salaryMin')!) : undefined
     const salaryMax = searchParams.get('salaryMax') ? parseFloat(searchParams.get('salaryMax')!) : undefined
     const page = parseInt(searchParams.get('page') || '1')
@@ -18,45 +20,55 @@ export async function GET(request: NextRequest) {
 
     // Build the where clause dynamically
     let whereClause: any = {
-      status: 'active'
+      status: JobStatus.PUBLISHED,
+      expiresAt: {
+        gt: new Date() // Only show jobs that haven't expired
+      }
     }
 
     if (query) {
       whereClause.OR = [
-        { title: { contains: query, mode: 'insensitive' } },
-        { description: { contains: query, mode: 'insensitive' } },
-        { company: { name: { contains: query, mode: 'insensitive' } } }
+        { title: { contains: query } },
+        { description: { contains: query } },
+        {
+          company: {
+            name: { contains: query }
+          }
+        }
       ]
     }
 
     if (location) {
-      whereClause.OR = whereClause.OR || []
-      whereClause.OR.push(
-        { city: { contains: location, mode: 'insensitive' } },
-        { province: { contains: location, mode: 'insensitive' } },
-        { country: { contains: location, mode: 'insensitive' } }
-      )
+      whereClause.location = { contains: location }
     }
 
-    if (positionType) {
-      whereClause.positionType = positionType
+    if (employmentType) {
+      whereClause.employmentType = employmentType
     }
 
-    if (remotePolicy) {
-      whereClause.remotePolicy = remotePolicy
+    if (isRemote) {
+      whereClause.isRemote = true
     }
 
     if (experienceLevel) {
       whereClause.experienceLevel = experienceLevel
     }
 
+    if (categoryId) {
+      whereClause.categoryId = categoryId
+    }
+
     if (salaryMin !== undefined || salaryMax !== undefined) {
-      whereClause.AND = []
+      const salaryFilter: any = {}
       if (salaryMin !== undefined) {
-        whereClause.AND.push({ salaryMin: { gte: salaryMin } })
+        salaryFilter.gte = salaryMin
       }
       if (salaryMax !== undefined) {
-        whereClause.AND.push({ salaryMax: { lte: salaryMax } })
+        salaryFilter.lte = salaryMax
+      }
+      whereClause.salary = {
+        path: '$.min',
+        ...salaryFilter
       }
     }
 
@@ -91,38 +103,56 @@ export async function GET(request: NextRequest) {
         }
       },
       orderBy: [
-        { isFeatured: 'desc' },
-        { isUrgent: 'desc' },
-        { postedAt: 'desc' }
+        { updatedAt: 'desc' },
+        { createdAt: 'desc' }
       ],
       skip: offset,
       take: limit
     })
 
     // Transform the data to match the frontend interface
-    const transformedJobs = jobs.map(job => ({
-      id: job.jobId,
-      title: job.title,
-      company: job.company.name,
-      location: `${job.city}, ${job.province}`.trim(),
-      salaryMin: job.salaryMin,
-      salaryMax: job.salaryMax,
-      currency: job.salaryCurrency,
-      positionType: job.positionType,
-      remotePolicy: job.remotePolicy,
-      description: job.description,
-      postedAt: job.postedAt.toISOString(),
-      isFeatured: job.isFeatured,
-      isUrgent: job.isUrgent,
-      companyLogo: job.company.logoUrl,
-      experienceLevel: job.experienceLevel,
-      requiredSkills: job.requiredSkills,
-      preferredSkills: job.preferredSkills,
-      requiredDocuments: job.requiredDocuments,
-      applicationCount: job.applicationCount,
-      viewCount: job.viewCount,
-      matchScore: job.matchScore
-    }))
+    const transformedJobs = jobs.map(job => {
+      const salaryData = job.salary as { min: number; max: number; currency: string } | null
+      
+      return {
+        id: job.jobId,
+        title: job.title,
+        company: {
+          id: job.company.companyId,
+          name: job.company.name,
+          logo: job.company.logoUrl,
+          isVerified: job.company.isVerified
+        },
+        category: job.category ? {
+          id: job.category.categoryId,
+          name: job.category.name,
+          icon: job.category.icon,
+          color: job.category.color
+        } : null,
+        location: job.location || '',
+        salary: salaryData ? {
+          min: salaryData.min,
+          max: salaryData.max,
+          currency: salaryData.currency
+        } : null,
+        employmentType: job.employmentType,
+        isRemote: job.isRemote,
+        description: job.description,
+        requirements: job.requirements as {
+          essential: string[];
+          preferred: string[];
+        },
+        createdAt: job.createdAt.toISOString(),
+        updatedAt: job.updatedAt.toISOString(),
+        expiresAt: job.expiresAt?.toISOString(),
+        experienceLevel: job.experienceLevel,
+        applicantCount: job.applicantCount,
+        employer: {
+          id: job.employer.employerId,
+          name: job.employer.fullName
+        }
+      }
+    })
 
     return NextResponse.json({
       success: true,

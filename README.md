@@ -192,4 +192,93 @@ graph TD
 
 ---
 
+## 💰 Subscriptions & Plans
+
+### Payment Processing
+- **PayPal API Integration** for secure payment processing
+- Webhook handling for payment events
+- Automatic renewal management
+- Invoice generation
+
+### Available Plans
+
+#### Job Seekers
+1. **Free Plan**
+   - Basic job search
+   - Limited job applications (5/month)
+   - Basic profile
+   - AI resume review (1/month)
+
+2. **Premium Plan** ($9.99/month)
+   - Unlimited job applications
+   - Enhanced profile visibility
+   - AI resume builder & reviews
+   - Priority support
+   - Interview preparation tools
+
+3. **Professional Plan** ($19.99/month)
+   - All Premium features
+   - AI career coach access
+   - Salary insights
+   - Direct messaging to employers
+   - Custom job alerts
+
+#### Employers
+1. **Starter Plan** ($49/month)
+   - Up to 5 job postings
+   - Basic candidate search
+   - Standard job visibility
+   - Basic analytics
+
+2. **Business Plan** ($99/month)
+   - Up to 15 job postings
+   - AI-powered candidate matching
+   - Featured job listings
+   - Advanced analytics
+   - Bulk resume download
+
+3. **Enterprise Plan** ($199/month)
+   - Unlimited job postings
+   - Priority support
+   - Custom branding
+   - API access
+   - Dedicated account manager
+
+### Implementation Details
+```typescript
+interface SubscriptionPlan {
+  id: string;
+  name: string;
+  price: number;
+  interval: 'month' | 'year';
+  features: string[];
+  limits: {
+    jobPostings?: number;
+    applications?: number;
+    aiCredits?: number;
+  };
+}
+
+interface PaymentProcessor {
+  provider: 'paypal';
+  mode: 'sandbox' | 'live';
+  webhookUrl: string;
+  successUrl: string;
+  cancelUrl: string;
+}
+```
+
+### Payment Flow
+```mermaid
+graph TD
+    A[User] -->|Selects Plan| B[Checkout Page]
+    B -->|Initiates Payment| C[PayPal API]
+    C -->|Success| D[Update Subscription]
+    C -->|Cancel| E[Return to Plans]
+    D -->|Webhook| F[Process Payment]
+    F -->|Success| G[Activate Features]
+```
+
+---
+
 Built with ❤️ using Next.js, Prisma, and shadcn/ui.

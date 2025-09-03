@@ -1,4 +1,5 @@
 import { db } from '../src/lib/db'
+import { JobStatus, ApplicationStatus } from '@prisma/client'
 
 async function main() {
   console.log('Seeding database...')
