@@ -120,3 +120,196 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* =================================================================
+   Global Footer Styles
+   ================================================================= */
+.footer-container {
+  position: relative;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: rgba(255, 255, 255, 0.85);
+  padding-top: 150px; /* Space for the wave */
+  padding-bottom: 20px;
+  overflow: hidden;
+}
+
+.footer-wave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: translateY(-1px); /* Prevents small gap */
+}
+
+.footer-wave svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 150px; /* Height of the wave */
+}
+
+.footer-col {
+  margin-bottom: 30px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.footer-logo {
+  margin-right: 15px;
+  color: #4eacfd;
+}
+
+.footer-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.footer-mission {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.footer-email {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  margin-bottom: 20px;
+  transition: color 0.3s ease;
+}
+
+.footer-email:hover {
+  color: #4eacfd;
+}
+
+.footer-email i {
+  margin-right: 8px;
+}
+
+.footer-socials a {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.5rem;
+  margin-right: 15px;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.footer-socials a:hover {
+  color: #4eacfd;
+  transform: translateY(-2px);
+}
+
+.footer-col-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 25px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-col-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 30px;
+  height: 2px;
+  background-color: #4eacfd;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: color 0.3s ease, padding-left 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+  padding-left: 5px;
+}
+
+.footer-links i {
+  width: 25px;
+  text-align: center;
+  margin-right: 8px;
+  color: #4eacfd;
+}
+
+.footer-bottom-bar {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.copyright-text {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.legal-link {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.3s ease;
+}
+
+.legal-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.legal-separator {
+  margin: 0 10px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+  .footer-col {
+    text-align: center;
+  }
+  .footer-brand {
+    justify-content: center;
+  }
+  .footer-col-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .footer-links a {
+     justify-content: center;
+  }
+  .footer-bottom-bar .text-md-start,
+  .footer-bottom-bar .text-md-end {
+    text-align: center !important;
+  }
+  .footer-bottom-bar .col-md-6 {
+    margin-bottom: 10px;
+  }
+  .legal-link {
+    display: block;
+    margin-bottom: 5px;
+  }
+  .legal-separator {
+    display: none;
+  }
+}
