@@ -95,16 +95,17 @@ model EmployerProfile {
   @@map("employers")
 }
 
-// Admin Profile
+// Admin Profile - FIXED
 model AdminProfile {
   adminId         String   @id @default(cuid()) @map("admin_id")
-  userUid         String   @unique @map("admin_users")
+  userUid         String   @unique @map("user_uid") // Changed from "admin_users" to "user_uid"
   permissions     Json?    // Array of admin permissions
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @updatedAt @map("updated_at")
   
   // Relationships
-  jobs            Job[]
+  user            User     @relation(fields: [userUid], references: [uid], onDelete: Cascade) // Added opposite relation
+  jobs            Job[]    // This will be fixed by adding adminProfile field in Job model
   
   @@map("admin")
 }
@@ -160,7 +161,7 @@ model Company {
   @@map("companies")
 }
 
-// Job Management
+// Job Management - FIXED
 model Job {
   jobId         String   @id @default(cuid()) @map("job_id")
   title         String
@@ -180,10 +181,14 @@ model Job {
   updatedAt     DateTime @updatedAt @map("updated_at")
   expiresAt     DateTime? @map("expires_at")
   
+  // Added admin relation fields
+  adminProfileId String? @map("admin_profile_id") // Added for AdminProfile relation
+  
   // Relationships
   company       Company        @relation(fields: [companyId], references: [companyId], onDelete: Cascade)
   employer      EmployerProfile @relation(fields: [employerId], references: [employerId], onDelete: Cascade)
   category      JobCategory?   @relation(fields: [categoryId], references: [categoryId])
+  adminProfile  AdminProfile?  @relation(fields: [adminProfileId], references: [adminId]) // Added opposite relation
   applications  JobApplication[]
   savedJobs     SavedJob[]
   matches       Match[]
